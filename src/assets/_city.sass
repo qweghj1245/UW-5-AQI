@@ -1,0 +1,22 @@
+.city, .city__info
+    font-size: $font-size-base * 2.5
+
+.dash
+    +sizer(786px, 2px)
+    border: dashed 3px
+
+.city__info
+    +sizer(350px, 97px)
+    & .city__name
+        width: 190px
+    & .city__AQI
+        width: 160px
+    & .city__bottom__info
+        width: 350px
+        & .city__info-list
+            width: 290px
+            border-bottom: solid 1px
+            & .city__info-name, & .city__info-num
+                font-size: $font-size-base * 1.5
+            & .city__info-on
+                font-size: $font-size-base

@@ -1,0 +1,20 @@
+.header__title
+    font-size: $font-size-base * 2.5
+
+#header__select
+    +sizer(350px, 56px)
+
+.header__standard
+    +sizer(732px, auto)
+    display: flex
+    & .header__standard-box
+        border: solid 3px
+        border-right: none
+        & .header__standard-value, & .header__standard-title
+            +sizer(122px, auto)
+        & .header__standard-value
+            padding: 13.5px 0px
+        & .header__standard-title
+            padding: 16px 45px
+        & .header__standard-title-s
+            padding: 4px 15px 4px 15px
