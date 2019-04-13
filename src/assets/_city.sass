@@ -7,12 +7,42 @@
 
 .city__info
     +sizer(350px, 97px)
+    cursor: pointer
+    &:hover
+        transform: translate(-1%, -1%)
+        transition-duration: .2s
+        box-shadow: 3px 3px 2px -1px rgba(0,0,0,0.75);
+    &:active
+        transform: scale(.9)
     & .city__name
         width: 190px
     & .city__AQI
         width: 160px
     & .city__bottom__info
         width: 350px
+        & .city__info-list
+            width: 290px
+            border-bottom: solid 1px
+            & .city__info-name, & .city__info-num
+                font-size: $font-size-base * 1.5
+            & .city__info-on
+                font-size: $font-size-base
+
+.city__info-f
+    +sizer(350px, 97px)
+    & .city__name-f
+        width: 190px
+        font-size: $font-size-base * 2.25
+        vertical-align: center
+    & .city__AQI-f
+        width: 160px
+        font-size: $font-size-base * 3
+    & .city__bottom__info
+        width: 350px
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
         & .city__info-list
             width: 290px
             border-bottom: solid 1px

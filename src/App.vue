@@ -37,29 +37,30 @@
       .container.py-5
         .row.no-gutters
           .col-md-4.d-flex.justify-content-end
-              .city__info
+              .city__info-f
                   .city__top__info.d-flex.text-center.font-weight-bold
-                      .city__name.border.border-right-0.py-7.text-truncate {{singleTown.SiteName}}
-                      .city__AQI.border.py-7(:class="selectColor(singleTown.Status)" v-if="singleTown.AQI") {{singleTown.AQI}}
-                      .city__AQI.border.py-7(:class="selectColor(singleTown.Status)" v-else) N/A
-                  .city__bottom__info.pt-9.border.border-top-0.d-flex.justify-content-center.flex-column.align-items-center.mb-8
+                    .city__name-f.border.border-right-0.pt-10.text-truncate {{singleTown.SiteName}}
+                    .city__AQI-f.border.py-11(:class="selectColor(singleTown.Status)"
+                    v-if="singleTown.AQI") {{singleTown.AQI}}
+                    .city__AQI.border.py-11(:class="selectColor(singleTown.Status)" v-else) N/A
+                  .city__bottom__info.pt-9.border.border-top-0.mb-8
                       .city__info-list.d-flex.align-items-center.py-7
                         .city__info-name.font-weight-bold.mr-2 臭氧
                         .city__info-on.mr-auto O3 (ppb)
                         .city__info-num.font-weight-bold {{singleTown.O3}}
-                      .city__info-list.d-flex.align-items-center.py-7.mb-8
+                      .city__info-list.d-flex.align-items-center.py-7
                         .city__info-name.font-weight-bold.mr-2 懸浮微粒
                         .city__info-on.mr-auto PM10 (μg/m³)
                         .city__info-num.font-weight-bold {{singleTown.PM10}}
-                      .city__info-list.d-flex.align-items-center.py-7.mb-8
+                      .city__info-list.d-flex.align-items-center.py-7
                         .city__info-name.font-weight-bold.mr-2 細懸浮微粒
                         .city__info-on.mr-auto PM2.5 (μg/m³)
                         .city__info-num.font-weight-bold {{singleTown["PM2.5"]}}
-                      .city__info-list.d-flex.align-items-center.py-7.mb-8
+                      .city__info-list.d-flex.align-items-center.py-7
                         .city__info-name.font-weight-bold.mr-2 一氧化碳
                         .city__info-on.mr-auto CO (ppm)
                         .city__info-num.font-weight-bold {{singleTown.CO}}
-                      .city__info-list.d-flex.align-items-center.py-7.mb-8
+                      .city__info-list.d-flex.align-items-center.py-7
                         .city__info-name.font-weight-bold.mr-2 二氧化硫
                         .city__info-on.mr-auto SO2 (ppb)
                         .city__info-num.font-weight-bold {{singleTown.SO2}}
@@ -69,10 +70,12 @@
                         .city__info-num.font-weight-bold {{singleTown.NO2}}
           .col-md-8
             .ml-8.d-flex.flex-wrap.justify-content-start
-              .city__info.mb-6.mr-8(v-for="(item, key) in getSeveral" :key="item.SiteName")
+              .city__info.mb-6.mr-8(v-for="(item, key) in getSeveral"
+              :key="item.SiteName" @click="chooseInfo(item)")
                   .city__top__info.d-flex.text-center.font-weight-bold
                       .city__name.border.border-right-0.py-7.text-truncate {{item.SiteName}}
-                      .city__AQI.border.py-7(:class="selectColor(item.Status)" v-if="item.AQI") {{item.AQI}}
+                      .city__AQI.border.py-7(:class="selectColor(item.Status)"
+                      v-if="item.AQI") {{item.AQI}}
                       .city__AQI.border.py-7(:class="selectColor(item.Status)" v-else) N/A
 </template>
 
@@ -87,67 +90,67 @@ export default {
       publishTime: '',
       singleTown: {},
       severalTown: [],
-    }
+    };
   },
   methods: {
     getCounty() {
       const vm = this;
-      const api = `https://script.google.com/macros/s/AKfycbxoxEKXg7wfRCog0CU1Xfjq1FG3Z5r73T27qyITfqNKD9f5_Iir/exec?url=http://opendata.epa.gov.tw/webapi/Data/REWIQA/?format=json`;
+      const api = 'https://script.google.com/macros/s/AKfycbxoxEKXg7wfRCog0CU1Xfjq1FG3Z5r73T27qyITfqNKD9f5_Iir/exec?url=http://opendata.epa.gov.tw/webapi/Data/REWIQA/?format=json';
       this.$http({
         method: 'get',
         url: api,
-      }).then(res => {
+      }).then((res) => {
         vm.items = res.data;
         vm.singleTown = vm.getTown(vm.selectCounty);
         // console.log(vm.items);
-      }).catch(function(error){
-        console.log(error);
       });
     },
     getTown(town = '高雄市') {
-      return this.items.find((item) => {
-        return item.County === town;
-      });
+      return this.items.find(item => item.County === town);
     },
     selectColor(status) {
       let cn = '';
-      switch(status) {
+      switch (status) {
         case '良好':
-          return cn = 'bg-g'
-          break;
+          cn = 'bg-g';
+          return cn;
         case '普通':
-          return cn = 'bg-y'
-          break;
+          cn = 'bg-y';
+          return cn;
         case '對敏感族群不健康':
-          return cn = 'bg-o'
-          break;
+          cn = 'bg-o';
+          return cn;
         case '對所有族群不健康':
-          return cn = 'bg-r'
-          break;
+          cn = 'bg-r';
+          return cn;
         case '非常不健康':
-          return cn = 'bg-p'
-          break;
+          cn = 'bg-p';
+          return cn;
         case '危害':
-          return cn = 'bg-dr'
-          break;
+          cn = 'bg-dr';
+          return cn;
         default:
-          return cn = ''
-          break;
+          cn = '';
+          return cn;
       }
+    },
+    chooseInfo(item) {
+      this.singleTown = item;
     },
   },
   computed: {
     filterData() {
       const vm = this;
-      let town = new Set();
-      vm.items.forEach(item => {
+      const town = new Set();
+      vm.items.forEach((item) => {
         town.add(item.County);
         vm.publishTime = item.PublishTime;
-      })
-      this.getCounty();
-      return vm.counties = Array.from(town);
+      });
+      vm.counties = Array.from(town);
+      return vm.counties;
     },
     getSeveral() {
+      /* eslint-disable */      
       return this.severalTown = this.items.filter((item) => {
         if (this.selectCounty) {
           return item.County === this.selectCounty;
@@ -160,6 +163,10 @@ export default {
     if (this.selectCounty === '') {
       this.selectCounty = '高雄市';
     }
+  },
+  watch: {
+    /* eslint-disable */
+    'selectCounty': 'getCounty',
   },
 };
 </script>
